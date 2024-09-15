@@ -8,5 +8,3 @@ This section addresses common questions
 and provides best practices and use cases.
 
 ### Section header
-
-<!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
