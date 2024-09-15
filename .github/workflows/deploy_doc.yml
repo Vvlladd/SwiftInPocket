@@ -6,16 +6,20 @@ on:
       - main
 
 jobs:
-  build-docs:
+  deploy:
+    environment:
+      # This is required to deploy to GitHub Pages
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: macos-latest
-    
+
     steps:
-    - name: Checkout repository
+    - name: Checkout repository 🛎️
       uses: actions/checkout@v4
 
     - name: Set up Xcode (specify version)
       run: |
-        sudo xcode-select -s /Applications/Xcode_15.0.app/Contents/Developer
+        sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
         sudo xcodebuild -license accept
 
     - name: Build documentation for SwiftInPocket
@@ -27,8 +31,11 @@ jobs:
         $(xcrun --find docc) process-archive transform-for-static-hosting /tmp/docbuild/Build/Products/Debug-iphoneos/SwiftInPocket.doccarchive --output-path docs --hosting-base-path SwiftInPocket
         echo "<script>window.location.href += \"/documentation/swiftinpocket\"</script>" > docs/index.html
 
-    - name: Upload Documentation as Artifact
-      uses: actions/upload-artifact@v4
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
       with:
-        name: docs
-        path: docs/
+        path: 'docs'  # Upload only the docs directory
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
