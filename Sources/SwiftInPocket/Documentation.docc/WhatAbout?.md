@@ -1,4 +1,4 @@
-# WhatAbout?
+# What About?
 
  An in-depth look at specific Swift features, tools, or practices.
 
