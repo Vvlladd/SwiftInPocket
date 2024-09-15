@@ -15,7 +15,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-      # Add other permissions you need here
+      pages: write
 
     steps:
     - name: Checkout repository 🛎️
